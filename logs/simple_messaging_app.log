@@ -1,0 +1,4 @@
+2024/11/15 21:31:49 Successfully migrate database
+2024/11/15 21:32:08 successfully connected to mongoDB
+2024/11/15 21:33:19 failed to insert new user: Error 1062 (23000): Duplicate entry 'egardeveloper' for key 'users.uni_users_username'
+2024/11/15 21:35:09 failed to validate request: Key: 'User.FullName' Error:Field validation for 'FullName' failed on the 'required' tag
