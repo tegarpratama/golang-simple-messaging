@@ -1,45 +1,62 @@
 package repository
 
 import (
+	"context"
 	"time"
 
-	"github.com/gofiber/fiber/v2"
 	"github.com/kooroshh/fiber-boostrap/app/models"
 	"github.com/kooroshh/fiber-boostrap/pkg/database"
+	"go.elastic.co/apm"
 )
 
-func InsertNewUser(ctx *fiber.Ctx, user *models.User) error {
+func InsertNewUser(ctx context.Context, user *models.User) error {
+	span, _ := apm.StartSpan(ctx, "InsertNewUser", "repository")
+	defer span.End()
+
 	return database.DB.Create(user).Error
 }
 
-func InsertNewUserSession(ctx *fiber.Ctx, session *models.UserSession) error {
+func InsertNewUserSession(ctx context.Context, session *models.UserSession) error {
+	span, _ := apm.StartSpan(ctx, "InsertNewUserSession", "repository")
+	defer span.End()
+
 	return database.DB.Create(session).Error
 }
 
-func GetUserSessionByToken(ctx *fiber.Ctx, token string) (models.UserSession, error) {
+func GetUserSessionByToken(ctx context.Context, token string) (models.UserSession, error) {
+	span, _ := apm.StartSpan(ctx, "GetUserSessionByToken", "repository")
+	defer span.End()
+
 	var (
 		resp models.UserSession
 		err  error
 	)
-
 	err = database.DB.Where("token = ?", token).Last(&resp).Error
 	return resp, err
 }
 
-func DeleteUserSessionByToken(ctx *fiber.Ctx, token string) error {
+func DeleteUserSessionByToken(ctx context.Context, token string) error {
+	span, _ := apm.StartSpan(ctx, "DeleteUserSessionByToken", "repository")
+	defer span.End()
+
 	return database.DB.Exec("DELETE FROM user_sessions WHERE token = ?", token).Error
 }
 
-func GetUser(ctx *fiber.Ctx, username string) (models.User, error) {
+func UpdateUserSessionToken(ctx context.Context, token string, tokenExpired time.Time, refreshToken string) error {
+	span, _ := apm.StartSpan(ctx, "UpdateUserSessionToken", "repository")
+	defer span.End()
+
+	return database.DB.Exec("UPDATE user_sessions SET token = ?, token_expired=? WHERE refresh_token = ?", token, tokenExpired, refreshToken).Error
+}
+
+func GetUserByUsername(ctx context.Context, username string) (models.User, error) {
+	span, _ := apm.StartSpan(ctx, "GetUserByUsername", "repository")
+	defer span.End()
+
 	var (
 		resp models.User
 		err  error
 	)
-
 	err = database.DB.Where("username = ?", username).Last(&resp).Error
 	return resp, err
-}
-
-func UpdateUserSessionToken(ctx *fiber.Ctx, token string, tokenExpired time.Time, refreshToken string) error {
-	return database.DB.Exec("UPDATE user_sessions SET token = ?, token_expired = ? WHERE refresh_token = ?", token, tokenExpired, refreshToken).Error
 }

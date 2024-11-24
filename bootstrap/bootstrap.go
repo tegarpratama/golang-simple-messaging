@@ -14,6 +14,7 @@ import (
 	"github.com/kooroshh/fiber-boostrap/pkg/database"
 	"github.com/kooroshh/fiber-boostrap/pkg/env"
 	"github.com/kooroshh/fiber-boostrap/pkg/router"
+	"go.elastic.co/apm"
 )
 
 func NewApplication() *fiber.App {
@@ -22,6 +23,8 @@ func NewApplication() *fiber.App {
 
 	database.SetupDatabase()
 	database.SetupMongoDB()
+
+	apm.DefaultTracer.Service.Name = "simple-mesaging-app"
 	engine := html.New("./views", ".html")
 	app := fiber.New(fiber.Config{Views: engine})
 	app.Use(recover.New())
@@ -29,6 +32,7 @@ func NewApplication() *fiber.App {
 	app.Get("/dashboard", monitor.New())
 
 	go ws.ServeWSMessaging(app)
+
 	router.InstallRouter(app)
 
 	return app

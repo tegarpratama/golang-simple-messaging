@@ -2,3 +2,19 @@
 2024/11/15 21:32:08 successfully connected to mongoDB
 2024/11/15 21:33:19 failed to insert new user: Error 1062 (23000): Duplicate entry 'egardeveloper' for key 'users.uni_users_username'
 2024/11/15 21:35:09 failed to validate request: Key: 'User.FullName' Error:Field validation for 'FullName' failed on the 'required' tag
+2024/11/15 23:21:28 Successfully migrate database
+2024/11/15 23:21:48 successfully connected to mongoDB
+2024/11/15 23:22:51 failed to validate request: Key: 'User.FullName' Error:Field validation for 'FullName' failed on the 'required' tag
+2024/11/19 19:58:49 Successfully migrate database
+2024/11/19 19:59:07 successfully connected to mongoDB
+2024/11/19 20:05:52 Successfully migrate database
+2024/11/19 20:06:12 successfully connected to mongoDB
+2024/11/19 20:08:46 failed to validate request: Key: 'User.FullName' Error:Field validation for 'FullName' failed on the 'required' tag
+2024/11/19 20:08:50 failed to validate request: Key: 'User.FullName' Error:Field validation for 'FullName' failed on the 'required' tag
+2024/11/19 20:16:19 Successfully migrate database
+2024/11/19 20:16:37 successfully connected to mongoDB
+2024/11/24 20:32:23 Successfully migrate database
+2024/11/24 20:32:43 successfully connected to mongoDB
+2024/11/24 20:35:49 failed to get username: record not found
+2024/11/24 20:36:03 failed to insert new user: Error 1062 (23000): Duplicate entry 'egardeveloper2' for key 'users.uni_users_username'
+2024/11/24 20:37:27 error payload:  websocket: close 1001 (going away)

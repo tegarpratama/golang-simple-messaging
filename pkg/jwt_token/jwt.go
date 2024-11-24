@@ -1,12 +1,13 @@
 package jwt_token
 
 import (
+	"context"
 	"fmt"
 	"time"
 
-	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/kooroshh/fiber-boostrap/pkg/env"
+	"go.elastic.co/apm"
 )
 
 type ClaimToken struct {
@@ -22,7 +23,9 @@ var MapTypeToken = map[string]time.Duration{
 
 var jwtSecret = []byte(env.GetEnv("APP_SECRET", ""))
 
-func GenerateToken(ctx *fiber.Ctx, username, fullname, typeToken string, now time.Time) (string, error) {
+func GenerateToken(ctx context.Context, username string, fullname string, tokenType string, now time.Time) (string, error) {
+	span, _ := apm.StartSpan(ctx, "GenerateToken", "jwt")
+	defer span.End()
 
 	claimToken := ClaimToken{
 		Username: username,
@@ -30,7 +33,7 @@ func GenerateToken(ctx *fiber.Ctx, username, fullname, typeToken string, now tim
 		RegisteredClaims: jwt.RegisteredClaims{
 			Issuer:    env.GetEnv("APP_NAME", ""),
 			IssuedAt:  jwt.NewNumericDate(now),
-			ExpiresAt: jwt.NewNumericDate(now.Add(MapTypeToken[typeToken])),
+			ExpiresAt: jwt.NewNumericDate(now.Add(MapTypeToken[tokenType])),
 		},
 	}
 
@@ -43,7 +46,10 @@ func GenerateToken(ctx *fiber.Ctx, username, fullname, typeToken string, now tim
 	return resultToken, nil
 }
 
-func ValidateToken(ctx *fiber.Ctx, token string) (*ClaimToken, error) {
+func ValidateToken(ctx context.Context, token string) (*ClaimToken, error) {
+	span, _ := apm.StartSpan(ctx, "ValidateToken", "jwt")
+	defer span.End()
+
 	var (
 		claimToken *ClaimToken
 		ok         bool
@@ -65,5 +71,4 @@ func ValidateToken(ctx *fiber.Ctx, token string) (*ClaimToken, error) {
 	}
 
 	return claimToken, nil
-
 }
