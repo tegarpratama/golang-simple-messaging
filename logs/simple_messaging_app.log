@@ -18,3 +18,11 @@
 2024/11/24 20:35:49 failed to get username: record not found
 2024/11/24 20:36:03 failed to insert new user: Error 1062 (23000): Duplicate entry 'egardeveloper2' for key 'users.uni_users_username'
 2024/11/24 20:37:27 error payload:  websocket: close 1001 (going away)
+2024/11/25 10:49:14 Failed to connect to the Database! 
+Error 1049 (42000): Unknown database 'fastcampus_messenger'
+2024/11/25 10:49:28 Successfully migrate database
+2024/11/25 10:49:47 successfully connected to mongoDB
+2024/11/25 10:51:02 failed to validate request: Key: 'User.Username' Error:Field validation for 'Username' failed on the 'min' tag
+Key: 'User.FullName' Error:Field validation for 'FullName' failed on the 'min' tag
+2024/11/25 10:51:15 failed to validate request: Key: 'User.FullName' Error:Field validation for 'FullName' failed on the 'min' tag
+2024/11/25 10:53:03 error payload:  websocket: close 1001 (going away)
