@@ -12,13 +12,13 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v4
       - name: create .env file
-        uses: echo "PORT ${{ secrets.PORT }}"
+        run: echo "PORT ${{ secrets.PORT }}" >> .env
       - name: Login to docker hub
-        uses: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build docker image
-        uses: docker build . -t egardev/simple_messaging_app
+        run: docker build . -t egardev/simple_messaging_app
       - name: Push docker image to dockerhub
-        uses: docker push egardev/simple_messaging_app:latest
+        run: docker push egardev/simple_messaging_app:latest
 
   deploy:
     needs: build
