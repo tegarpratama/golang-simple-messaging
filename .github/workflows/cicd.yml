@@ -19,7 +19,6 @@ jobs:
         run: docker build . -t egardev/simple_messaging_app
       - name: Push docker image to dockerhub
         run: docker push egardev/simple_messaging_app:latest
-
   deploy:
     needs: build
     runs-on: self-hosted
