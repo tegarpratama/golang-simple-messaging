@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
@@ -19,6 +19,7 @@ jobs:
         run: docker build . -t egardev/simple_messaging_app
       - name: Push docker image to dockerhub
         run: docker push egardev/simple_messaging_app:latest
+
   deploy:
     needs: build
     runs-on: self-hosted
